@@ -12,6 +12,11 @@ const selectBrand = document.querySelector('#brand-select')
 const selectSort = document.querySelector('#sort-select')
 const sectionProducts = document.querySelector('#products');
 const spanNbProducts = document.querySelector('#nbProducts');
+const spanNewProducts = document.querySelector('#newProducts');
+const spanP50 = document.querySelector('#p50');
+const spanP90 = document.querySelector('#p90');
+const spanP95 = document.querySelector('#p95');
+const spanlastReleased = document.querySelector('#lastReleased');
 
 /**
  * Set global value
@@ -115,10 +120,21 @@ let renderBrand = products => {
  * Render page selector
  * @param  {Object} pagination
  */
-const renderIndicators = pagination => {
-    const { count } = pagination;
-
+const renderIndicators =  async pagination => {
+    let products = await fetchProducts(currentPagination.currentPage, selectShow.value);
+    const count = products.meta.count;
     spanNbProducts.innerHTML = count;
+    spanNewProducts.innerHTML = newProduct(products);
+    products = sortByPrice(products)
+    var p50 = Math.floor(1 / 2 * products.length);
+    var p90 = Math.floor(9 / 10 * products.length);
+    var p95 = Math.floor(95 / 100 * products.length);
+    spanP50.innerHTML = products[p50-1].price;
+    spanP90.innerHTML = products[p90-1].price;
+    spanP95.innerHTML = products[p95-1].price;
+    products = await fetchProducts(currentPagination.currentPage, selectShow.value);
+    products = sortByDateDesc(products)
+    spanlastReleased.innerHTML = products[products.length-1].released;
 };
 
 const render = (products, pagination) => {
@@ -127,7 +143,17 @@ const render = (products, pagination) => {
     renderIndicators(pagination);
     renderBrand(products);
 };
-
+function newProduct(items) {
+    var count = 0;
+    items.result.forEach(
+        element => {
+            if (element.released > "2022-01-01") {
+                count = count + 1;
+            }
+        }
+    )
+    return count;
+};
 function sortByPrice(items) {
     return items.result.sort(
         function (a, b) {
