@@ -8,6 +8,9 @@ let currentPagination = {};
 // inititiate selectors
 const selectShow = document.querySelector('#show-select');
 const selectPage = document.querySelector('#page-select');
+var btn = document.querySelector('#btn');
+var button = document.querySelector('#button');
+var nofilter = document.querySelector('#nofilter');
 const selectBrand = document.querySelector('#brand-select')
 const selectSort = document.querySelector('#sort-select')
 const sectionProducts = document.querySelector('#products');
@@ -17,6 +20,10 @@ const spanP50 = document.querySelector('#p50');
 const spanP90 = document.querySelector('#p90');
 const spanP95 = document.querySelector('#p95');
 const spanlastReleased = document.querySelector('#lastReleased');
+const reasonablePrice = document.querySelector('#reasonablePrice');
+const recentlyReleased = document.querySelector('#recentlyReleased');
+
+
 
 /**
  * Set global value
@@ -147,7 +154,7 @@ function newProduct(items) {
     var count = 0;
     items.result.forEach(
         element => {
-            if (element.released > "2022-01-01") {
+            if (element.released > "2022-01-15") {
                 count = count + 1;
             }
         }
@@ -266,3 +273,29 @@ selectSort.addEventListener('change', async (event) => {
     }
     render(currentProducts, currentPagination);
 });
+
+btn.addEventListener('click', function () {
+    currentProducts.forEach(product => {
+        if (product.released > "2022-01-15") {
+            product.new = true;
+        }
+        else {
+            product.new = false;
+        }
+    })
+    currentProducts = currentProducts.filter(product => product.new == true);
+    render(currentProducts, currentPagination);
+})
+
+button.addEventListener('click', function () {
+    currentProducts = currentProducts.filter(product => product.price <= 50);
+    render(currentProducts, currentPagination);
+})
+
+nofilter.addEventListener('click', async function () {
+    let products = await fetchProducts(currentPagination.currentPage, selectShow.value);
+    setCurrentProducts(products);
+    render(currentProducts, currentPagination);
+})
+
+
