@@ -74,7 +74,7 @@ const renderProducts = products => {
             return `
       <div class="product" id=${product.uuid}>
         <span>${product.brand}</span>
-        <a href="${product.link}">${product.name}</a>
+        <a href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
       </div>
     `;
@@ -296,6 +296,8 @@ nofilter.addEventListener('click', async function () {
     let products = await fetchProducts(currentPagination.currentPage, selectShow.value);
     setCurrentProducts(products);
     render(currentProducts, currentPagination);
+    selectSort.value = "none";
+
 })
 
 
