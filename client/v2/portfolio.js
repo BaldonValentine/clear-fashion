@@ -12,6 +12,7 @@ var btn = document.querySelector('#btn');
 var button = document.querySelector('#button');
 var nofilter = document.querySelector('#nofilter');
 var favorite = document.querySelector('#favorite')
+var filterFav = document.querySelector('#filterFav');
 const selectBrand = document.querySelector('#brand-select')
 const selectSort = document.querySelector('#sort-select')
 const sectionProducts = document.querySelector('#products');
@@ -70,6 +71,7 @@ const fetchProducts = async (page = 1, size = 12) => {
 const renderProducts = products => {
     const fragment = document.createDocumentFragment();
     const div = document.createElement('div');
+    let count = -1;
     const template = products
         .map(product => {
             return `
@@ -77,7 +79,7 @@ const renderProducts = products => {
         <span class="nomB">${product.brand}</span>
         <a class="nomP" href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
-        <a class="button" id="favorite${1}" >Favorite</a>
+        <a class="button" onclick = "${count = counter(count)},addFav('${count}')" >Favorite</a>
       </div>
     `;
         })
@@ -88,7 +90,15 @@ const renderProducts = products => {
     sectionProducts.innerHTML = '<h2>Products</h2>';
     sectionProducts.appendChild(fragment);
 };
+function counter(count) {
+    return count + 1;
 
+}
+function addFav(index) {
+    console.log(index);
+    currentProducts[index].favorit = true;
+    console.log(currentProducts);
+}
 /**
  * Render page selector
  * @param  {Object} pagination
@@ -299,11 +309,9 @@ nofilter.addEventListener('click', async function () {
     setCurrentProducts(products);
     render(currentProducts, currentPagination);
     selectSort.value = "none";
-    //currentProducts[0].favorit = true;
-    //console.log(currentProducts);
-
 })
-/*
-favorite.addEventListener('click', function () {
-    console.log('dzfzefq');
-})*/
+
+filterFav.addEventListener('click', function () {
+    currentProducts = currentProducts.filter(product => product.favorit == true);
+    render(currentProducts, currentPagination);
+})
