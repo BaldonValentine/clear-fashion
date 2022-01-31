@@ -11,6 +11,7 @@ const selectPage = document.querySelector('#page-select');
 var btn = document.querySelector('#btn');
 var button = document.querySelector('#button');
 var nofilter = document.querySelector('#nofilter');
+var favorite = document.querySelector('#favorite')
 const selectBrand = document.querySelector('#brand-select')
 const selectSort = document.querySelector('#sort-select')
 const sectionProducts = document.querySelector('#products');
@@ -73,9 +74,10 @@ const renderProducts = products => {
         .map(product => {
             return `
       <div class="product" id=${product.uuid}>
-        <span>${product.brand}</span>
-        <a href="${product.link}" target="_blank">${product.name}</a>
+        <span class="nomB">${product.brand}</span>
+        <a class="nomP" href="${product.link}" target="_blank">${product.name}</a>
         <span>${product.price}</span>
+        <a class="button" id="favorite${1}" >Favorite</a>
       </div>
     `;
         })
@@ -297,7 +299,11 @@ nofilter.addEventListener('click', async function () {
     setCurrentProducts(products);
     render(currentProducts, currentPagination);
     selectSort.value = "none";
+    //currentProducts[0].favorit = true;
+    //console.log(currentProducts);
 
 })
-
-
+/*
+favorite.addEventListener('click', function () {
+    console.log('dzfzefq');
+})*/
