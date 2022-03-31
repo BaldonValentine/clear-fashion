@@ -8,34 +8,34 @@ const {'v5': uuidv5} = require('uuid');
  * @return {Object} restaurant
  */
 const parse = data => {
-  const $ = cheerio.load(data, {'xmlMode': true});
+    const $ = cheerio.load(data, { 'xmlMode': true });
 
-  return $('.product-grid__item')
-    .map((i, element) => {
-      const link = `https://www.loom.fr${$(element)
-        .find('.product-title a')
-        .attr('href')}`;
+    return $('.product-grid__item')
+        .map((i, element) => {
+            const brand = 'Loom';
+            const name = $(element)
+                .find('.product-title')
+                .text()
+                .trim()
+                .replace(/\s/g, ' ');
 
-      return {
-        link,
-        'brand': 'loom',
-        'price': parseInt(
-          $(element)
-            .find('.money')
-            .text()
-        ),
-        'name': $(element)
-          .find('.product-title')
-          .text()
-          .trim()
-          .replace(/\s/g, ' '),
-        'photo': $(element)
-          .find('noscript img.product_card__image')
-          .attr('src'),
-        '_id': uuidv5(link, uuidv5.URL)
-      };
-    })
-    .get();
+            const link = 'https://www.loom.fr${$(element)'
+                .find('.product-title a')
+                .attr('href')
+
+            const price = parseInt(
+                $(element)
+                    .find('.money')
+                    .text());
+
+            const image = $(element)
+                .find('noscript img.product_card__image')
+                .attr('src')
+
+
+            return { name, brand, price, link, image };
+        })
+        .get();
 };
 
 /**

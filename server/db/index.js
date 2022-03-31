@@ -2,9 +2,10 @@ require('dotenv').config();
 const {MongoClient} = require('mongodb');
 const fs = require('fs');
 
+
 const MONGODB_DB_NAME = 'clearfashion';
 const MONGODB_COLLECTION = 'products';
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = "mongodb+srv://ValentineBaldon:valval@cluster0.smsvy.mongodb.net/Cluster0?retryWrites=true&w=majority";
 
 let client = null;
 let database = null;
@@ -47,7 +48,7 @@ module.exports.insert = async products => {
 
     return result;
   } catch (error) {
-    console.error('🚨 collection.insertMany...', error);
+    console.error('collection.insertMany...', error);
     fs.writeFileSync('products.json', JSON.stringify(products));
     return {
       'insertedCount': error.result.nInserted

@@ -10,26 +10,38 @@ const parse = data => {
   const $ = cheerio.load(data);
 
   return $('.productList-container .productList')
-    .map((i, element) => {
+      .map((i, element) => {
+      const brand = 'dedicated';
       const name = $(element)
         .find('.productList-title')
         .text()
         .trim()
         .replace(/\s/g, ' ');
-      const price = parseInt(
-        $(element)
-          .find('.productList-price')
-          .text()
-      );
 
-      return {name, price};
+      const link = `https://www.dedicatedbrand.com${$(element)
+         .find('.productList-link')
+         .attr('href')}`;
+
+      const price = parseInt(
+           $(element)
+                  .find('.productList-price')
+              .text());
+
+      const photo = $(element)
+              .find('.productList-image img')
+              .attr('data-src');
+
+      //const id = uuidv5(link, uuidv5.URL);
+      
+
+      return {name, brand, price, link, photo};
     })
     .get();
 };
 
 /**
  * Scrape all the products for a given url page
- * @param  {[type]}  url
+ * @param  {[type]} url
  * @return {Array|null}
  */
 module.exports.scrape = async url => {

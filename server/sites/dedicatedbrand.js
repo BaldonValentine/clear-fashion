@@ -3,9 +3,9 @@ const cheerio = require('cheerio');
 const {'v5': uuidv5} = require('uuid');
 
 /**
- * Parse webpage restaurant
+ * Parse webpage 
  * @param  {String} data - html response
- * @return {Object} restaurant
+ * @return {Object} 
  */
 const parse = data => {
   const $ = cheerio.load(data);
@@ -15,7 +15,7 @@ const parse = data => {
       const link = `https://www.dedicatedbrand.com${$(element)
         .find('.productList-link')
         .attr('href')}`;
-
+       
       return {
         link,
         'brand': 'dedicated',

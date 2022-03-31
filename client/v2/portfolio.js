@@ -24,8 +24,9 @@ const spanP95 = document.querySelector('#p95');
 const spanlastReleased = document.querySelector('#lastReleased');
 const reasonablePrice = document.querySelector('#reasonablePrice');
 const recentlyReleased = document.querySelector('#recentlyReleased');
-
-
+let productToAddFav;
+let listOfItemsForAddingInFavorite = [];
+let favorites;
 
 /**
  * Set global value
@@ -94,10 +95,20 @@ function counter(count) {
     return count + 1;
 
 }
-function addFav(index) {
-    console.log(index);
+function addFav(index)  {
     currentProducts[index].favorit = true;
-    console.log(currentProducts);
+    //console.log(typeof listOfItemsForAddingInFavorite);
+    //listOfItemsForAddingInFavorite.push(currentProducts[index]);
+    //console.log(listOfItemsForAddingInFavorite);
+    //favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    //console.log(favorites);
+    /*productToAddFav = favorites.find(product => product.uuid == listOfItemsForAddingInFavorite.value);
+    console.log(productToAddFav);
+
+    favorites.push(listOfItemsForAddingInFavorite);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    console.log(favorites);*/
+
 }
 /**
  * Render page selector
@@ -311,7 +322,10 @@ nofilter.addEventListener('click', async function () {
     selectSort.value = "none";
 })
 
-filterFav.addEventListener('click', function () {
+filterFav.addEventListener('click', async function () {
     currentProducts = currentProducts.filter(product => product.favorit == true);
     render(currentProducts, currentPagination);
+    /*favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    render(favorites, currentPagination);*/
 })
