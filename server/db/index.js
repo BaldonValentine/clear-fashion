@@ -9,6 +9,14 @@ const MONGODB_URI = "mongodb+srv://ValentineBaldon:valval@cluster0.smsvy.mongodb
 
 let client = null;
 let database = null;
+let collection = null;
+
+
+const dbConnection = async () => {
+    client = await MongoClient.connect(MONGODB_URI);
+    database = client.db(MONGODB_DB_NAME)
+    collection = database.collection(MONGODB_COLLECTION)
+}
 
 /**
  * Get db connection

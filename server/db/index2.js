@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
-var data = JSON.parse(fs.readFileSync("C:/Users/Valentine Baldon/Documents/Ecole/A4/Web application/TD1/clear-fashion/server/dedicatedbrand.json", 'utf8'));
+var data = JSON.parse(fs.readFileSync("C:/clear-fashion/server/montlimart.json", 'utf8'));
 
 const MONGODB_URI = "mongodb+srv://ValentineBaldon:valval@cluster0.smsvy.mongodb.net/Cluster0?retryWrites=true&w=majority";
 const MONGODB_DB_NAME = 'clearfashion';
